@@ -8,9 +8,9 @@ public class Demo {
 		
 		CloudStorage.createBucket("my-bucket");
 		
-		CloudStorage.uploadFile("my-bucket", "/var/uploads/some-file.txt");
+		CloudStorage.uploadFile("my-bucket", "C:\\Users\\Bruno\\Documents\\Faculdade\\Integracao\\some-text.txt");
 		
-		CloudStorage.downloadFile("my-bucket", "some-file.txt", "/var/downloads");
+		CloudStorage.downloadFile("my-bucket", "some-text.txt", "C:\\Users\\Bruno\\Documents\\Faculdade\\Integracao\\downloads");
 		
 		List<String> buckets = CloudStorage.listBuckets();
 		
