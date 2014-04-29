@@ -16,17 +16,17 @@ public class ListBucketsTest {
 	@Before
 	public void before() throws Exception {
 		bucketName = "simple-cloud-storage-" + UUID.randomUUID().toString();
-		CloudStorage.createBucket(bucketName);
+		GerenciadorDaNuvem.criaBucket(bucketName);
 	}
 
 	@Test
 	public void testListBuckets() throws Exception {
-		List<String> buckets = CloudStorage.listBuckets();
+		List<String> buckets = GerenciadorDaNuvem.listBuckets();
 		Assert.assertTrue(buckets.contains(bucketName));
 	}
 	
 	@After
 	public void after() throws Exception {
-		CloudStorage.deleteBucket(bucketName);
+		GerenciadorDaNuvem.deletaBucket(bucketName);
 	}
 }

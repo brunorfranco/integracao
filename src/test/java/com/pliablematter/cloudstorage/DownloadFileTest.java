@@ -18,8 +18,8 @@ public class DownloadFileTest {
 	public void before() throws Exception {
 		
 		bucketName = "simple-cloud-storage-" + UUID.randomUUID().toString();
-		CloudStorage.createBucket(bucketName);
-		CloudStorage.uploadFile(bucketName, "src/test/resources/test.txt");
+		GerenciadorDaNuvem.criaBucket(bucketName);
+		GerenciadorDaNuvem.uploadArquivo(bucketName, "src/test/resources/test.txt");
 		
 		File directory = new File("temp");
 		directory.mkdir();
@@ -29,7 +29,7 @@ public class DownloadFileTest {
 	@Test
 	public void testDownloadFile() throws Exception {
 		
-		CloudStorage.downloadFile(bucketName, "test.txt", destinationDirectory);
+		GerenciadorDaNuvem.downloadArquivo(bucketName, "test.txt", destinationDirectory);
 		File file = new File(destinationDirectory + "/test.txt");
 		Assert.assertTrue(file.exists());
 	}
@@ -43,7 +43,7 @@ public class DownloadFileTest {
 		File directory = new File(destinationDirectory);
 		directory.delete();
 		
-		CloudStorage.deleteFile(bucketName, "test.txt");
-		CloudStorage.deleteBucket(bucketName);
+		GerenciadorDaNuvem.deleteArquivo(bucketName, "test.txt");
+		GerenciadorDaNuvem.deletaBucket(bucketName);
 	}
 }

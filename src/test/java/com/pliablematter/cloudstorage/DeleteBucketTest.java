@@ -17,18 +17,18 @@ public class DeleteBucketTest {
 	@Before
 	public void before() throws Exception {
 		bucketName = "simple-cloud-storage-" + UUID.randomUUID().toString();
-		CloudStorage.createBucket(bucketName);
+		GerenciadorDaNuvem.criaBucket(bucketName);
 	}
 
 	@Test
 	public void testDeleteBucket() throws Exception {
 		
-		List<String> buckets = CloudStorage.listBuckets();
+		List<String> buckets = GerenciadorDaNuvem.listBuckets();
 		Assert.assertTrue(buckets.contains(bucketName));
 		
-		CloudStorage.deleteBucket(bucketName);
+		GerenciadorDaNuvem.deletaBucket(bucketName);
 		
-		buckets = CloudStorage.listBuckets();
+		buckets = GerenciadorDaNuvem.listBuckets();
 		Assert.assertFalse(buckets.contains(bucketName));
 	}
 	
@@ -37,7 +37,7 @@ public class DeleteBucketTest {
 		
 		// Bucket should already be deleted, but try again just to make sure it's cleaned up
 		try {
-			CloudStorage.deleteBucket(bucketName);
+			GerenciadorDaNuvem.deletaBucket(bucketName);
 		} catch (GoogleJsonResponseException e) {
 			// Already deleted. Ignore.
 		}

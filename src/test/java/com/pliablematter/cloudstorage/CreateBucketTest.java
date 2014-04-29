@@ -20,17 +20,17 @@ public class CreateBucketTest {
 	@Test
 	public void testCreateBucket() throws Exception {
 		
-		List<String> buckets = CloudStorage.listBuckets();
+		List<String> buckets = GerenciadorDaNuvem.listBuckets();
 		Assert.assertFalse(buckets.contains(bucketName));
 		
-		CloudStorage.createBucket(bucketName);
+		GerenciadorDaNuvem.criaBucket(bucketName);
 		
-		buckets = CloudStorage.listBuckets();
+		buckets = GerenciadorDaNuvem.listBuckets();
 		Assert.assertTrue(buckets.contains(bucketName));
 	}
 	
 	@After
 	public void after() throws Exception {
-		CloudStorage.deleteBucket(bucketName);
+		GerenciadorDaNuvem.deletaBucket(bucketName);
 	}
 }

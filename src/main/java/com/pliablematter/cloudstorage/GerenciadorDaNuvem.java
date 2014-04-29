@@ -1,5 +1,6 @@
 package com.pliablematter.cloudstorage;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -25,7 +26,7 @@ import com.google.api.services.storage.model.StorageObject;
 /**
  * Simple wrapper around the Google Cloud Storage API
  */
-public class CloudStorage {
+public class GerenciadorDaNuvem {
 
 	private static Properties properties;
 	private static Storage storage;
@@ -45,7 +46,7 @@ public class CloudStorage {
 	 *            Absolute path of the file to upload
 	 * @throws Exception
 	 */
-	public static void uploadFile(String bucketName, String filePath)
+	public static void uploadArquivo(String bucketName, String filePath)
 			throws Exception {
 
 		Storage storage = getStorage();
@@ -72,23 +73,31 @@ public class CloudStorage {
 		}
 	}
 	
-	public static void downloadFile(String bucketName, String fileName, String destinationDirectory) throws Exception {
+	public static void downloadArquivo(String bucketName, String fileName, String destinationDirectory) throws Exception {
 		
 		File directory = new File(destinationDirectory);
-		if(!directory.isDirectory()) {
-			throw new Exception("Provided destinationDirectory path is not a directory");
-		}
-		File file = new File(directory.getAbsolutePath() + "/" + fileName);
+//		if(!directory.isDirectory()) {
+//			throw new Exception("Provided destinationDirectory path is not a directory");
+//		}
+//		File file = new File(directory.getAbsolutePath() + "/" + fileName);
 		
 		Storage storage = getStorage();
 		
 		Storage.Objects.Get get = storage.objects().get(bucketName, fileName);
-		FileOutputStream stream = new FileOutputStream(file);
-		try {
-			get.executeAndDownloadTo(stream);
-		} finally {
-			stream.close();
-		}
+//		FileOutputStream stream = new FileOutputStream(file);
+//		try {
+//			get.executeAndDownloadTo(stream);
+//		} finally {
+//			stream.close();
+//		}
+		//teste
+		FileOutputStream fos = new FileOutputStream (new File(directory.getAbsolutePath() + "/" + fileName)); 
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		// If you're not in AppEngine, download the whole thing in one request, if possible.
+		get.getMediaHttpDownloader().setDirectDownloadEnabled(false);
+		get.executeMediaAndDownloadTo(out);
+		
+		out.writeTo(fos);
 	}
 
 	/**
@@ -100,7 +109,7 @@ public class CloudStorage {
 	 *            The file to delete
 	 * @throws Exception
 	 */
-	public static void deleteFile(String bucketName, String fileName)
+	public static void deleteArquivo(String bucketName, String fileName)
 			throws Exception {
 
 		Storage storage = getStorage();
@@ -115,7 +124,7 @@ public class CloudStorage {
 	 *            Name of bucket to create
 	 * @throws Exception
 	 */
-	public static void createBucket(String bucketName) throws Exception {
+	public static void criaBucket(String bucketName) throws Exception {
 
 		Storage storage = getStorage();
 
@@ -133,7 +142,7 @@ public class CloudStorage {
 	 *            Name of bucket to delete
 	 * @throws Exception
 	 */
-	public static void deleteBucket(String bucketName) throws Exception {
+	public static void deletaBucket(String bucketName) throws Exception {
 
 		Storage storage = getStorage();
 		
@@ -190,8 +199,8 @@ public class CloudStorage {
 
 		if (properties == null) {
 			properties = new Properties();
-			InputStream stream = CloudStorage.class
-					.getResourceAsStream("/cloudstorage.properties");
+			InputStream stream = GerenciadorDaNuvem.class
+					.getResourceAsStream("/bruno.properties");
 			try {
 				properties.load(stream);
 			} catch (IOException e) {

@@ -16,21 +16,21 @@ public class ListBucketTest {
 	public void before() throws Exception {
 		
 		bucketName = "simple-cloud-storage-" + UUID.randomUUID().toString();
-		CloudStorage.createBucket(bucketName);
-		CloudStorage.uploadFile(bucketName, "src/test/resources/test.txt");
+		GerenciadorDaNuvem.criaBucket(bucketName);
+		GerenciadorDaNuvem.uploadArquivo(bucketName, "src/test/resources/test.txt");
 	}
 
 	@Test
 	public void testListBucket() throws Exception {
 		
-		List<String> files = CloudStorage.listBucket(bucketName);
+		List<String> files = GerenciadorDaNuvem.listBucket(bucketName);
 		Assert.assertTrue(files.contains("test.txt"));
 	}
 	
 	@After
 	public void after() throws Exception {
 		
-		CloudStorage.deleteFile(bucketName, "test.txt");
-		CloudStorage.deleteBucket(bucketName);
+		GerenciadorDaNuvem.deleteArquivo(bucketName, "test.txt");
+		GerenciadorDaNuvem.deletaBucket(bucketName);
 	}
 }
