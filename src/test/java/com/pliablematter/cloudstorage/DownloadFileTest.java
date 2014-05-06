@@ -9,6 +9,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.bruno.cloudstorage.GerenciadorDaNuvem;
+
 public class DownloadFileTest {
 	
 	private String bucketName;

@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.bruno.cloudstorage.GerenciadorDaNuvem;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 
 public class DeleteFileTest {
