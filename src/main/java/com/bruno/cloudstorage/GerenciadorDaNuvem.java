@@ -23,29 +23,16 @@ import com.google.api.services.storage.StorageScopes;
 import com.google.api.services.storage.model.Bucket;
 import com.google.api.services.storage.model.StorageObject;
 
-/**
- * Simple wrapper around the Google Cloud Storage API
- */
 public class GerenciadorDaNuvem {
 
 	private static Properties properties;
 	private static Storage storage;
 
-	private static final String PROJECT_ID_PROPERTY = "project.id";
-	private static final String APPLICATION_NAME_PROPERTY = "application.name";
-	private static final String ACCOUNT_ID_PROPERTY = "account.id";
-	private static final String PRIVATE_KEY_PATH_PROPERTY = "private.key.path";
+	private static final String ID_PROJETO = "project.id";
+	private static final String NOME_APLICACAO = "application.name";
+	private static final String ID_CONTA = "account.id";
+	private static final String CAMINHO_CHAVE_PRIVADA = "private.key.path";
 
-	/**
-	 * Uploads a file to a bucket. Filename and content type will be based on
-	 * the original file.
-	 * 
-	 * @param bucketName
-	 *            Bucket where file will be uploaded
-	 * @param filePath
-	 *            Absolute path of the file to upload
-	 * @throws Exception
-	 */
 	public static void uploadArquivo(String bucketName, String filePath)
 			throws Exception {
 
@@ -76,39 +63,18 @@ public class GerenciadorDaNuvem {
 	public static void downloadArquivo(String bucketName, String fileName, String destinationDirectory) throws Exception {
 		
 		File directory = new File(destinationDirectory);
-//		if(!directory.isDirectory()) {
-//			throw new Exception("Provided destinationDirectory path is not a directory");
-//		}
-//		File file = new File(directory.getAbsolutePath() + "/" + fileName);
-		
 		Storage storage = getStorage();
 		
 		Storage.Objects.Get get = storage.objects().get(bucketName, fileName);
-//		FileOutputStream stream = new FileOutputStream(file);
-//		try {
-//			get.executeAndDownloadTo(stream);
-//		} finally {
-//			stream.close();
-//		}
-		//teste
 		FileOutputStream fos = new FileOutputStream (new File(directory.getAbsolutePath() + "/" + fileName)); 
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		// If you're not in AppEngine, download the whole thing in one request, if possible.
+		
 		get.getMediaHttpDownloader().setDirectDownloadEnabled(false);
 		get.executeMediaAndDownloadTo(out);
 		
 		out.writeTo(fos);
 	}
 
-	/**
-	 * Deletes a file within a bucket
-	 * 
-	 * @param bucketName
-	 *            Name of bucket that contains the file
-	 * @param fileName
-	 *            The file to delete
-	 * @throws Exception
-	 */
 	public static void deleteArquivo(String bucketName, String fileName)
 			throws Exception {
 
@@ -117,13 +83,6 @@ public class GerenciadorDaNuvem {
 		storage.objects().delete(bucketName, fileName).execute();
 	}
 
-	/**
-	 * Creates a bucket
-	 * 
-	 * @param bucketName
-	 *            Name of bucket to create
-	 * @throws Exception
-	 */
 	public static void criaBucket(String bucketName) throws Exception {
 
 		Storage storage = getStorage();
@@ -132,16 +91,9 @@ public class GerenciadorDaNuvem {
 		bucket.setName(bucketName);
 
 		storage.buckets().insert(
-				getProperties().getProperty(PROJECT_ID_PROPERTY), bucket).execute();
+				getProperties().getProperty(ID_PROJETO), bucket).execute();
 	}
 	
-	/**
-	 * Deletes a bucket
-	 * 
-	 * @param bucketName
-	 *            Name of bucket to delete
-	 * @throws Exception
-	 */
 	public static void deletaBucket(String bucketName) throws Exception {
 
 		Storage storage = getStorage();
@@ -149,13 +101,6 @@ public class GerenciadorDaNuvem {
 		storage.buckets().delete(bucketName).execute();
 	}
 	
-	/**
-	 * Lists the objects in a bucket
-	 * 
-	 * @param bucketName bucket name to list
-	 * @return Array of object names
-	 * @throws Exception
-	 */
 	public static List<String> listBucket(String bucketName) throws Exception {
 		
 		Storage storage = getStorage();
@@ -172,20 +117,13 @@ public class GerenciadorDaNuvem {
 		return list;
 	}
 	
-	/**
-	 * List the buckets with the project
-	 * (Project is configured in properties)
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
 	public static List<String> listBuckets() throws Exception {
 		
 		Storage storage = getStorage();
 		
 		List<String> list = new ArrayList<String>();
 		
-		List<Bucket> buckets = storage.buckets().list(getProperties().getProperty(PROJECT_ID_PROPERTY)).execute().getItems();
+		List<Bucket> buckets = storage.buckets().list(getProperties().getProperty(ID_PROJETO)).execute().getItems();
 		if(buckets != null) {
 			for(Bucket b : buckets) {
 				list.add(b.getName());
@@ -228,15 +166,15 @@ public class GerenciadorDaNuvem {
 					.setTransport(httpTransport)
 					.setJsonFactory(jsonFactory)
 					.setServiceAccountId(
-							getProperties().getProperty(ACCOUNT_ID_PROPERTY))
+							getProperties().getProperty(ID_CONTA))
 					.setServiceAccountPrivateKeyFromP12File(
 							new File(getProperties().getProperty(
-									PRIVATE_KEY_PATH_PROPERTY)))
+									CAMINHO_CHAVE_PRIVADA)))
 					.setServiceAccountScopes(scopes).build();
 
 			storage = new Storage.Builder(httpTransport, jsonFactory,
 					credential).setApplicationName(
-					getProperties().getProperty(APPLICATION_NAME_PROPERTY))
+					getProperties().getProperty(NOME_APLICACAO))
 					.build();
 		}
 
