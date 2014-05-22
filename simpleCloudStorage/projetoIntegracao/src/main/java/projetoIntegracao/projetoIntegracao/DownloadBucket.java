@@ -2,7 +2,6 @@ package projetoIntegracao.projetoIntegracao;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,10 +12,16 @@ import java.nio.channels.ReadableByteChannel;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.InputStreamRequestEntity;
-import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 
 public class DownloadBucket {
@@ -27,8 +32,20 @@ public class DownloadBucket {
  
 		DownloadBucket http = new DownloadBucket();
  
-		downloadFileFromBucket("teste", "teste"); 
-//		testUpload();
+		testUpload();
+//		System.out.println("Testing 1 - Send Http GET request");
+//		http.sendPost();
+//		gravaArquivoDeURL("http://storage.googleapis.com/bucket-bruno/arquivoTeste.txt", "C:\\Users\\Bruno\\testeDownload");
+		
+//		URL somefile = new URL("http://storage.googleapis.com/bucket-bruno/arquivoTeste.txt");
+//		ReadableByteChannel rbc = Channels.newChannel(somefile.openStream());
+//		FileOutputStream fos = new FileOutputStream("C:\\Users\\Bruno\\teste2.txt");
+//		long start = System.currentTimeMillis();
+//		fos.getChannel().transferFrom(rbc, 0, 1 << 24);
+//		long end = System.currentTimeMillis();
+//		System.out.println(end-start);
+ 
+ 
 	}	
 	
 	// HTTP GET request
@@ -105,54 +122,43 @@ public class DownloadBucket {
 	 
 		}
 		
-		public static void downloadFileFromBucket(String stringUrl, String pathLocal) throws IOException {  
-			URL somefile = new URL("http://storage.googleapis.com/bucket-bruno/lala.txt"); // passar a stringUrl;
-//			URL somefile = new URL("https://console.developers.google.com/m/cloudstorage/b/bucket-bruno/o/lala?authuser=0");
-			
+		public void downloadFileFromBucket(String stringUrl, String pathLocal) throws IOException {  
+			URL somefile = new URL("http://storage.googleapis.com/bucket-bruno/arquivoTeste.txt"); // passar a stringUrl;
 			ReadableByteChannel rbc = Channels.newChannel(somefile.openStream());
-			FileOutputStream fos = new FileOutputStream("C:\\Users\\Bruno\\lala.txt"); // passar o pathLocal;
+			FileOutputStream fos = new FileOutputStream("C:\\Users\\Bruno\\teste2.txt"); // passar o pathLocal;
 			long start = System.currentTimeMillis();
 			fos.getChannel().transferFrom(rbc, 0, 1 << 24);
 			long end = System.currentTimeMillis();
 			System.out.println(end-start);
 		} 
 		
-		public static void testUpload() throws Exception {
-			HttpClient client = new HttpClient();
-		    client.getParams().setParameter("http.useragent", "Test Client");
-
-		    BufferedReader br = null;
-		    
-		    File input = new File("lala.txt");
-
-		    PostMethod method = new PostMethod("https://www.googleapis.com/upload/storage/v1/b/bucket-bruno/o?uploadType=media&name=lala.txt");
-		    method.addParameter("uploadType", "media");
-		    method.addParameter("name", "lala.txt");
-		    method.setRequestEntity(new InputStreamRequestEntity(
-	                new FileInputStream(input), input.length()));
-//		    method.setRequestHeader("Content-type", "image/png; charset=ISO-8859-1");
-		    method.setRequestHeader("Content-type", "application/octet-stream");
-		    
-		    try{
-		      int returnCode = client.executeMethod(method);
-
-		      if(returnCode == HttpStatus.SC_NOT_IMPLEMENTED) {
-		        System.err.println("The Post method is not implemented by this URI");
-		        method.getResponseBodyAsString();
-		      } else {
-		        br = new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream()));
-		        String readLine;
-		        while(((readLine = br.readLine()) != null)) {
-		          System.err.println(readLine);
-		      }
-		      }
-		    } catch (Exception e) {
-		      System.err.println(e);
-		    } finally {
-		      method.releaseConnection();
-		      if(br != null) try { br.close(); } catch (Exception fe) {}
-		    }
-
-		 }
+		public void uploadFileToBucket(){
+			
+		}
 		
+		public static void testUpload() throws Exception {
+		    HttpClient httpclient = new DefaultHttpClient();
+		    HttpPost httppost = new HttpPost("https://www.googleapis.com/upload/storage/v1/b/bucket-bruno/o");
+
+		    MultipartEntity reqEntity = new MultipartEntity(
+		        HttpMultipartMode.BROWSER_COMPATIBLE);
+
+		    reqEntity.addPart("string_field",
+		        new StringBody("field value"));
+
+		    FileBody bin = new FileBody(
+		        new File("test.png"));
+		    reqEntity.addPart("attachment_field", bin );
+
+		    httppost.setEntity(reqEntity);
+
+		    System.out.println("executing request " + httppost.getRequestLine());
+		    HttpResponse response = httpclient.execute(httppost);
+		    HttpEntity resEntity = response.getEntity();
+
+		    if (resEntity != null) {
+		        String page = EntityUtils.toString(resEntity);
+		        System.out.println("PAGE :" + page);
+		    }
+		}
 }
