@@ -9,8 +9,10 @@ import java.nio.channels.ReadableByteChannel;
 public class DownloadBucket {
 
 	public static void main(String[] args) throws Exception {
+		
+		String apiKey = "AIzaSyC-WNR8-sdx4B1w8-DB_Md90CLF20tKRBQ";
  
-		String stringUrl = "http://storage.googleapis.com/bucket-bruno/teste2.txt";
+		String stringUrl = "http://storage.googleapis.com/bucket-bruno/teste2.txt?key="+apiKey;
 		String pathParaDownload = "C:\\Users\\Bruno\\teste2.txt";
 		
 		downloadFileFromBucket(stringUrl, pathParaDownload); 
