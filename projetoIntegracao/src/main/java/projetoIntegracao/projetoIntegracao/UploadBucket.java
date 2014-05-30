@@ -13,10 +13,18 @@ import org.apache.commons.httpclient.methods.PostMethod;
 public class UploadBucket {
 
 	public static void main(String[] args) throws Exception {
-		String filePath = "C:\\Users\\Bruno\\teste2.txt";
-//		String filePath = "C:\\Program Files\\DVD Maker";
+		//exemplo
+		//String filePath = "C:\\Users\\Bruno\\";
+		//String fileName = "arrow2.png";
 		
-		String fileName = "teste2.txt";
+		String filePath = "";
+		String fileName  = "";
+		
+		if(args != null && args.length >= 2){
+			filePath = args[0];
+			fileName = args[1];
+		}
+		
 		uploadFileToBucket(filePath, fileName);
 	}
 
@@ -26,7 +34,7 @@ public class UploadBucket {
 
 		BufferedReader br = null;
 
-		File input = new File(filePath);
+		File input = new File(filePath + fileName);
 		long tamanhoEmBytesEquivalenteACemMegaBytes = 100 * 1048576;
 		
 		if(input.length() > tamanhoEmBytesEquivalenteACemMegaBytes){

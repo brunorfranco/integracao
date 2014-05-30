@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
+
+	<!-- Servlets -->
+	<servlet>
+		<servlet-name>greetServlet</servlet-name>
+		<servlet-class>com.queueexample.server.GreetingServiceImpl</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>GAEJCreateTaskServlet</servlet-name>
+		<servlet-class>com.queueexample.server.GAEJCreateTaskServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>GAEJSignupSubscriberServlet</servlet-name>
+		<servlet-class>com.queueexample.server.GAEJSignupSubscriberServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GAEJSignupSubscriberServlet</servlet-name>
+		<url-pattern>/queueexample/gaejsignupsubscriber</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GAEJCreateTaskServlet</servlet-name>
+		<url-pattern>/queueexample/gaejcreatetask</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>greetServlet</servlet-name>
+		<url-pattern>/queueexample/greet</url-pattern>
+	</servlet-mapping>
+
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>QueueExample.html</welcome-file>
+	</welcome-file-list>
+
+</web-app>
