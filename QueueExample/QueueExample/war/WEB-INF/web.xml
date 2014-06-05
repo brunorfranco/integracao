@@ -5,31 +5,22 @@
 	version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
 
 	<!-- Servlets -->
-	<servlet>
-		<servlet-name>greetServlet</servlet-name>
-		<servlet-class>com.queueexample.server.GreetingServiceImpl</servlet-class>
-	</servlet>
 
 	<servlet>
-		<servlet-name>GAEJCreateTaskServlet</servlet-name>
-		<servlet-class>com.queueexample.server.GAEJCreateTaskServlet</servlet-class>
+		<servlet-name>CriadorMensagensServlet</servlet-name>
+		<servlet-class>com.queueexample.server.CriadorMensagensServlet</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>GAEJSignupSubscriberServlet</servlet-name>
-		<servlet-class>com.queueexample.server.GAEJSignupSubscriberServlet</servlet-class>
+		<servlet-name>ConsumidorMensagensServlet</servlet-name>
+		<servlet-class>com.queueexample.server.ConsumidorMensagensServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>GAEJSignupSubscriberServlet</servlet-name>
-		<url-pattern>/queueexample/gaejsignupsubscriber</url-pattern>
+		<servlet-name>ConsumidorMensagensServlet</servlet-name>
+		<url-pattern>/consomemensagem</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>GAEJCreateTaskServlet</servlet-name>
-		<url-pattern>/queueexample/gaejcreatetask</url-pattern>
-	</servlet-mapping>
-
-	<servlet-mapping>
-		<servlet-name>greetServlet</servlet-name>
-		<url-pattern>/queueexample/greet</url-pattern>
+		<servlet-name>CriadorMensagensServlet</servlet-name>
+		<url-pattern>/criamensagem</url-pattern>
 	</servlet-mapping>
 
 	<!-- Default page to serve -->

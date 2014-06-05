@@ -1,21 +1,22 @@
 package projetoIntegracao.projetoIntegracao;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 
+import projetoCriptografia.Criptografia;
+
 
 public class DownloadBucket {
 
 	public static void main(String[] args) throws Exception {
 		
-//		Process processCompile = Runtime.getRuntime().exec("javac Criptografia.java");
-//		Process processRun = Runtime.getRuntime().exec("java Criptografia teste");
-//		System.out.println(processRun.getInputStream());
-//		Runtime.getRuntime().exec("cmd /c start cmd.exe /K \"cd C:\\Users\\Bruno\\Documents\\GitHub\\integracao && java projetoCriptografia\"");
 		
-		String apiKey = "AIzaSyBTOqMtlFD7KUsK7p9ObGlMBOJuQRyMxuM";
+		Criptografia crypto = new Criptografia();
+		String apiKeyEncrypted =crypto.encryptedValue;
+		String apiKey = crypto.decrypt(apiKeyEncrypted);
 		
 		String nomeArquivoComExtensao = "";
 		String pathParaDownload = "";

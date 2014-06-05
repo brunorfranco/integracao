@@ -9,29 +9,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
-public class GAEJSignupSubscriberServlet extends HttpServlet {
+public class ConsumidorMensagensServlet extends HttpServlet {
 	private static final Logger _logger = Logger
-			.getLogger(GAEJSignupSubscriberServlet.class.getName());
+			.getLogger(ConsumidorMensagensServlet.class.getName());
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
 
-		String strCallResult = "";
+		String mensagemResposta = "";
 		resp.setContentType("text/plain");
 		try {
-			String strEmailId = req.getParameter("emailid");
-			_logger.info("Got a Signup Subscriber Request for Email ID : "
-					+ strEmailId);
+			String mensagem = req.getParameter("msg");
+			_logger.info("Mensagem que chegou : "
+					+ mensagem);
 			//
-			// PUT YOUR TASK CODE HERE
+			// Coloco as regras de negócio aqui
 			//
-			strCallResult = "SUCCESS: Subscriber Signup";
-			_logger.info(strCallResult);
-			resp.getWriter().println(strCallResult);
+			mensagemResposta = "SUCCESSO: Mensagem chegou com sucesso";
+			_logger.info(mensagemResposta);
+			resp.getWriter().println(mensagemResposta);
 		} catch (Exception ex) {
-			strCallResult = "FAIL: Subscriber Signup : " + ex.getMessage();
-			_logger.info(strCallResult);
-			resp.getWriter().println(strCallResult);
+			mensagemResposta = "Falha: " + ex.getMessage();
+			_logger.info(mensagemResposta);
+			resp.getWriter().println(mensagemResposta);
 		}
 	}
 
