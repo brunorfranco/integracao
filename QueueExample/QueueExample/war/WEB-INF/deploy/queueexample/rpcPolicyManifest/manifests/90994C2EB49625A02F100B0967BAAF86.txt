@@ -1,2 +1,0 @@
-serviceClass: com.queueexample.client.GreetingService
-path: 51D2ECABF3ABB56E4B88249EDBD94F22.gwt.rpc

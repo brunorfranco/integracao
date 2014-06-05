@@ -1,7 +1,0 @@
-Servidor de Serviço em questão: Google
-Grupo 2: Aplicativo para upload/download de arquivos.
-
-Durante a semana foi realizada a minha ambientação com o serviço do Google
-oferecido para buckets.
-Foi instalado o Python34 e o gsutil para a utilização desse serviço.
-Com isso, não foi gerado código para submissão, apenas entendimento dessas ferramentas.
