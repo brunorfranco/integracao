@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee">
+
+  <!-- Servlets -->
+  <servlet>
+    <servlet-name>greetServlet</servlet-name>
+    <servlet-class>com.queue2.server.GreetingServiceImpl</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>greetServlet</servlet-name>
+    <url-pattern>/projetoqueue2/greet</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+		<servlet-name>CriadorMensagensServlet</servlet-name>
+		<servlet-class>com.queue2.server.CriadorMensagensServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ConsumidorMensagensServlet</servlet-name>
+		<servlet-class>com.queue2.server.ConsumidorMensagensServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ConsumidorMensagensServlet</servlet-name>
+		<url-pattern>/consomemensagem</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CriadorMensagensServlet</servlet-name>
+		<url-pattern>/criamensagem</url-pattern>
+	</servlet-mapping>
+  
+  <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>ProjetoQueue2.html</welcome-file>
+  </welcome-file-list>
+
+</web-app>
