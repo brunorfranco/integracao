@@ -9,12 +9,17 @@ import org.apache.commons.httpclient.methods.GetMethod;
 
 public class GoogleQueueSender {
 
-	public static void main(String[] a) throws Exception {
-		String message="teste4";
+	public static Boolean send(String message) throws Exception {
 		
 		if(message == null || message.isEmpty()){
 			System.out.println("Entre com uma mensagem valida.");
-			return;
+			return false;
+		}
+		
+		long tamanhoMaximoMensagem = 64 *1000;
+		if(message.length() > tamanhoMaximoMensagem){
+			System.out.println("Entre com uma mensagem valida.");
+			return false;
 		}
 		
 		HttpClient client = new HttpClient();
@@ -32,6 +37,7 @@ public class GoogleQueueSender {
 				System.err
 						.println("The Post method is not implemented by this URI");
 				method.getResponseBodyAsString();
+				return false;
 			} else {
 				br = new BufferedReader(new InputStreamReader(
 						method.getResponseBodyAsStream()));
@@ -39,9 +45,11 @@ public class GoogleQueueSender {
 				while (((readLine = br.readLine()) != null)) {
 					System.err.println(readLine);
 				}
+				return true;
 			}
 		} catch (Exception e) {
 			System.err.println(e);
+			return false;
 		} finally {
 			method.releaseConnection();
 			if (br != null)
