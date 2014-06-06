@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queue-entries>
+	<queue>
+		<name>default</name>
+		<rate>5/s</rate>
+	</queue>
+	<queue>
+	    <name>fila-mensagens</name>
+	    <mode>pull</mode>
+	    <retry-parameters>
+	      <task-retry-limit>7</task-retry-limit>
+	    </retry-parameters>
+	    <acl>
+	      <user-email>disciplinasufg@gmail.com</user-email>      <!-- can list, get, lease, delete, and update tasks -->
+	      <writer-email>bruno.rodrigues.franco1@gmail.com</writer-email> <!-- can insert tasks -->
+	      <writer-email>bruno.rodrigues.franco1@gmail.com</writer-email>  <!-- can do all -->
+	    </acl>
+  </queue>
+</queue-entries>

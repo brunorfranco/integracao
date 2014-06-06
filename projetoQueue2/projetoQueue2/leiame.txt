@@ -1,2 +1,0 @@
-Projeto esta no ar, para realizar testes, utilizar a url:
-http://1-dot-bruno-teste-queue.appspot.com/criamensagem?msg=teste1
