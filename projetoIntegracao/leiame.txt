@@ -1,0 +1,13 @@
+Documentação para o bom funcionamento da aplicação projetoIntegração.
+ 
+ *Para a classe DownloadBucket.java, ela espera como argumentos:
+1 - caminho da máquina onde será realizado o download
+2 - nome do arquivo com a extensão.
+3 - nome do bucket onde se encontra o arquivo.
+(Caso não tenha bucket, pode utilizar como padrão o bucket 'bucket-bruno')
+
+ *Para a classe UploadBucket.java, ela espera como argumentos:
+1 - caminho da máquina onde se encontra o arquivo
+2 - nome do arquivo com a extensão.
+3 - nome do bucket onde será upado o arquivo.
+(Caso não tenha bucket, pode utilizar como padrão o bucket 'bucket-bruno')

@@ -20,17 +20,18 @@ public class DownloadBucket {
 		
 		String nomeArquivoComExtensao = "";
 		String pathParaDownload = "";
+		String nomeBucket = "";
 		
-		if(args != null && args.length > 1){
+		if(args != null && args.length > 2){
 			pathParaDownload = args[0];
 			nomeArquivoComExtensao = args[1];
+			nomeBucket = args[2];
+		} else {
+			System.out.println("Problema nos argumentos, por favor verifique a documentação.");
+			return;
 		}
 		
-		String stringUrl = "http://storage.googleapis.com/bucket-bruno/"+nomeArquivoComExtensao+"?key="+apiKey;
-		
-		//exemplo
-		//String pathParaDownload = "C:\\Users\\Bruno\\Desktop\\arquivoTeste.txt";
-		//String nomeArquivoComExtensao = "arquivoTeste.txt";
+		String stringUrl = "http://storage.googleapis.com/"+nomeBucket+"/"+nomeArquivoComExtensao+"?key="+apiKey;
 		
 		downloadFileFromBucket(stringUrl, pathParaDownload); 
 	}	

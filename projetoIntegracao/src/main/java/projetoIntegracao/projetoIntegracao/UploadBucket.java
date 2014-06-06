@@ -13,22 +13,22 @@ import org.apache.commons.httpclient.methods.PostMethod;
 public class UploadBucket {
 
 	public static void main(String[] args) throws Exception {
-		//exemplo
-		//String filePath = "C:\\Users\\Bruno\\";
-		//String fileName = "arrow2.png";
-		
+
 		String filePath = "";
-		String fileName  = "";
-		
-		if(args != null && args.length >= 2){
+		String fileName = "";
+		String bucketName = "";
+
+		if (args != null && args.length >= 3) {
 			filePath = args[0];
 			fileName = args[1];
+			bucketName = args[2];
 		}
-		
-		uploadFileToBucket(filePath, fileName);
+
+		uploadFileToBucket(filePath, fileName, bucketName);
 	}
 
-	public static void uploadFileToBucket(String filePath, String fileName) throws Exception {
+	public static void uploadFileToBucket(String filePath, String fileName,
+			String bucketName) throws Exception {
 		HttpClient client = new HttpClient();
 		client.getParams().setParameter("http.useragent", "Test Client");
 
@@ -36,20 +36,19 @@ public class UploadBucket {
 
 		File input = new File(filePath + fileName);
 		long tamanhoEmBytesEquivalenteACemMegaBytes = 100 * 1048576;
-		
-		if(input.length() > tamanhoEmBytesEquivalenteACemMegaBytes){
+
+		if (input.length() > tamanhoEmBytesEquivalenteACemMegaBytes) {
 			System.out.println("Tamanho do arquivo excede 100MB.");
 			return;
 		}
 
 		PostMethod method = new PostMethod(
-				"https://www.googleapis.com/upload/storage/v1/b/bucket-bruno/o?uploadType=media&name=" + fileName );
+				"https://www.googleapis.com/upload/storage/v1/b/" + bucketName
+						+ "/o?uploadType=media&name=" + fileName);
 		method.addParameter("uploadType", "media");
 		method.addParameter("name", fileName);
 		method.setRequestEntity(new InputStreamRequestEntity(
 				new FileInputStream(input), input.length()));
-		// method.setRequestHeader("Content-type",
-		// "image/png; charset=ISO-8859-1");
 		method.setRequestHeader("Content-type", "application/octet-stream");
 
 		try {
