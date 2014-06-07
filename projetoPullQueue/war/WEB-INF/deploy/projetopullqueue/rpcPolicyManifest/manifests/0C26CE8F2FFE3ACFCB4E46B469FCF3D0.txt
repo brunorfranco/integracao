@@ -1,0 +1,2 @@
+serviceClass: com.pull.client.GreetingService
+path: 63DACAB6E529BA08D024C7B678A6AC9D.gwt.rpc

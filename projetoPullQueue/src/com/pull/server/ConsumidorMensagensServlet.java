@@ -1,6 +1,7 @@
 package com.pull.server;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
@@ -14,7 +15,6 @@ import com.google.appengine.api.taskqueue.Queue;
 import com.google.appengine.api.taskqueue.QueueFactory;
 import com.google.appengine.api.taskqueue.TaskHandle;
 
-
 @SuppressWarnings("serial")
 public class ConsumidorMensagensServlet extends HttpServlet {
 	private static final Logger _logger = Logger
@@ -26,11 +26,20 @@ public class ConsumidorMensagensServlet extends HttpServlet {
 		String mensagemResposta = "";
 		resp.setContentType("text/plain");
 		try {
+			String mensagem = "";
+			String tag = req.getParameter("msg");
 			Queue q = QueueFactory.getQueue("fila-mensagens");
+			List<TaskHandle> tasks = q.leaseTasksByTag(3600, TimeUnit.SECONDS, 100, tag);
+			if(!tasks.isEmpty()){
+				Iterator<TaskHandle> x = tasks.iterator();
+				while (x.hasNext()) {
+					TaskHandle tHandle = (TaskHandle) x.next();
+					mensagem = new String(tHandle.getTag());
+					System.out.println(mensagem.toString());
+				}
+				mensagemResposta = mensagem.toString();
+			}
 
-			List<TaskHandle> tasks = q.leaseTasks(3600, TimeUnit.SECONDS, 100);
-			
-			mensagemResposta = "SUCCESSO: Mensagem chegou com sucesso";
 			_logger.info(mensagemResposta);
 			resp.getWriter().println(mensagemResposta);
 		} catch (Exception ex) {

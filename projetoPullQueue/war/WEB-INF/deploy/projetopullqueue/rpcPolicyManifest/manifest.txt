@@ -1,2 +1,3 @@
 # Module projetopullqueue
 # RPC service class, partial path of RPC policy file
+com.pull.client.GreetingService, 63DACAB6E529BA08D024C7B678A6AC9D.gwt.rpc

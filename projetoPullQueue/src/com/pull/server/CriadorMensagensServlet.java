@@ -32,7 +32,7 @@ public class CriadorMensagensServlet extends HttpServlet {
 			
 			Queue queue = QueueFactory.getQueue("fila-mensagens");
 			queue.add(TaskOptions.Builder.withMethod(TaskOptions.Method.PULL)
-                    .payload(mensagem));
+                    .tag(mensagem));
 			
 			mensagemResposta = "Mensagem adicionada a fila.";
 			resp.getWriter().println(mensagemResposta);
