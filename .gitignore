@@ -5,3 +5,4 @@
 target/*
 src/main/resources/cloudstorage.properties
 /target
+/MyOwnAnnotationExample/target/

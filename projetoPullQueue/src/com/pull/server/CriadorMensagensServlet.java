@@ -1,5 +1,6 @@
 package com.pull.server;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -18,7 +19,11 @@ public class CriadorMensagensServlet extends HttpServlet {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-
+	}
+	
+	@Override
+	public void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		String mensagemResposta = "";
 		resp.setContentType("text/plain");
 		try {
@@ -40,11 +45,5 @@ public class CriadorMensagensServlet extends HttpServlet {
 			mensagemResposta = "Falha: " + ex.getMessage();
 			resp.getWriter().println(mensagemResposta);
 		}
-	}
-	
-	@Override
-	public void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		doGet(req, resp);
 	}
 }

@@ -31,10 +31,10 @@ public class ConsumidorMensagensServlet extends HttpServlet {
 			Queue q = QueueFactory.getQueue("fila-mensagens");
 			List<TaskHandle> tasks = q.leaseTasksByTag(3600, TimeUnit.SECONDS, 100, tag);
 			if(!tasks.isEmpty()){
-				Iterator<TaskHandle> x = tasks.iterator();
-				while (x.hasNext()) {
-					TaskHandle tHandle = (TaskHandle) x.next();
-					mensagem = new String(tHandle.getTag());
+				Iterator<TaskHandle> mensagens = tasks.iterator();
+				while (mensagens.hasNext()) {
+					TaskHandle taskMensagem = (TaskHandle) mensagens.next();
+					mensagem = new String(taskMensagem.getTag());
 					System.out.println(mensagem.toString());
 				}
 				mensagemResposta = mensagem.toString();

@@ -5,7 +5,9 @@ import java.io.InputStreamReader;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.StringRequestEntity;
 
 public class PullQueue {
 
@@ -27,8 +29,9 @@ public class PullQueue {
 
 		BufferedReader br = null;
 
-		GetMethod method = new GetMethod(
-				"http://1-dot-pullqueuebruno.appspot.com/criamensagem?msg="+message);
+		PostMethod method = new PostMethod(
+				"http://1-dot-pullqueuebruno.appspot.com/criamensagem");
+		method.addParameter(new NameValuePair("msg", message));
 
 		try {
 			int returnCode = client.executeMethod(method);
@@ -79,8 +82,9 @@ public class PullQueue {
 
 		BufferedReader br = null;
 
-		GetMethod method = new GetMethod(
-				"http://1-dot-pullqueuebruno.appspot.com/consomemensagem?msg="+message);
+		PostMethod method = new PostMethod(
+				"http://1-dot-pullqueuebruno.appspot.com/consomemensagem");
+		method.addParameter(new NameValuePair("msg", message));
 
 		try {
 			int returnCode = client.executeMethod(method);

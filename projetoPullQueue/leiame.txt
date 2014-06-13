@@ -1,11 +1,13 @@
-Para utilizar a biblioteca 'bibliotecaPullTask', as mensagem estão sendo armazenadas
-na app engine, na aplicação 'projetoPullQueue', disponível nesse endereço:
+Para utilizar a biblioteca 'bibliotecaPullTask', as mensagem estao sendo armazenadas
+na app engine, na aplicacao 'projetoPullQueue', disponivel nesse endereco:
 http://1-dot-pullqueuebruno.appspot.com/
-Para adicionar uma mensagem na fila, utilize esse padrão de requisição:
-http://1-dot-pullqueuebruno.appspot.com/criamensagem?msg=msg2
-Para receber uma mensagem da fila, utilize esse padrão de requisição:
-http://1-dot-pullqueuebruno.appspot.com/consomemensagem?msg=msg2
+Para adicionar uma mensagem na fila, utilize esse padrao de requisicao:
+http://1-dot-pullqueuebruno.appspot.com/criamensagem
+Passando a mensagem no corpo da requisicao (post)
+Para receber uma mensagem da fila, utilize esse padrao de requisicao:
+http://1-dot-pullqueuebruno.appspot.com/consomemensagem
+Passando a mensagem que quer receber no corpo da requisicao (post)
 
-Porém, isso está encapsulado pela biblioteca, por ela é apenas chamar os metodos
+Porem, isso esta encapsulado pela biblioteca disponibilizada, por ela basta apenas chamar os metodos
 send e receive.
 
